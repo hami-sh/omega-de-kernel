@@ -1855,7 +1855,7 @@ u32 IWRAM_CODE LoadEMU2PSRAM(TCHAR *filename,u32 is_EMU)
 				//f_lseek(&gfile, blocknum);
 				if (filesize-blocknum*0x20000 < 0x20000)
 					memset(pReadCache, 0, 0x20000);
-				f_read(&gfile, pReadCache, 0x20000, &ret);//pReadCache max 0x20000 Byte
+				f_read(&gfile, pReadCache, 0x20000, (UINT*)&ret);//pReadCache max 0x20000 Byte
 				page = 0;
 						
 				Address=blocknum;
