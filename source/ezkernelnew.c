@@ -3388,7 +3388,7 @@ load_file:
   	switch(MENU_line){
   		case 0://DirectPSRAM CLEAN BOOT
 
-  			ShowbootProgress(gl_loading_game);\
+  			ShowbootProgress(gl_loading_game); 			
 
 				Send_FATbuffer(FAT_table_buffer,0);
 				GBApatch_Cleanrom(PSRAMBase_S98,gamefilesize);
@@ -3398,7 +3398,7 @@ load_file:
 			else
 				reset_choice = gl_toggle_reset;
 				SetRompageWithHardReset(0x200,reset_choice);
-  			break;
+	  		break;
 	    case 1://PSRAM BOOT WITH ADDON
 	    	ShowbootProgress(gl_loading_game);
 	    	gl_reset_on = Read_SET_info(assress_v_reset);
