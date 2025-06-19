@@ -67,4 +67,6 @@ u32 LoadRTSfile(TCHAR *filename);
 void ShowTime(u32 page_num ,u32 page_mode);
 u8 NOR_list_MENU(u32 show_offset,	u32 file_select);
 u8 SD_list_MENU(u32 show_offset,	u32 file_select,u32 play_re);
+
+void Boot_NOR_game(u32 show_offset, u32 file_select, u32 key_L);
 //#endif

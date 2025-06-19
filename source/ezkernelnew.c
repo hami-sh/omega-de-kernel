@@ -2431,6 +2431,32 @@ int main(void) {
 		memset(pNorFS,00,sizeof(FM_NOR_FS)*MAX_NOR);
 		Save_NOR_info((u16*)pNorFS,sizeof(FM_NOR_FS)*MAX_NOR);
 	}
+	else {
+		// auto boot any of the first 3 games stored in NOR Flash
+		VBlankIntrWait();
+		scanKeys();
+		u16 keys_held = keysHeld();
+		
+		// Check for L+R combination first (game 2)
+		if((keys_held & (KEY_L | KEY_R)) == (KEY_L | KEY_R))
+		{
+			if(game_total_NOR > 2) {
+				Boot_NOR_game(0, 2, 0);
+			}
+		}
+		// Check for R button (game 1) 
+		else if(keys_held & KEY_R)
+		{
+			if(game_total_NOR > 1) {
+				Boot_NOR_game(0, 1, 0);
+			}
+		}
+		// Check for L button (game 0)
+		else if(keys_held & KEY_L)
+		{
+			Boot_NOR_game(0, 0, 0);
+		}
+	}
 
 refind_file:
 	
@@ -3362,7 +3388,7 @@ load_file:
   	switch(MENU_line){
   		case 0://DirectPSRAM CLEAN BOOT
 
-  			ShowbootProgress(gl_loading_game); 			
+  			ShowbootProgress(gl_loading_game); 		
 
 				Send_FATbuffer(FAT_table_buffer,0);
 				GBApatch_Cleanrom(PSRAMBase_S98,gamefilesize);
@@ -3371,8 +3397,8 @@ load_file:
 				reset_choice = !gl_toggle_reset;
 			else
 				reset_choice = gl_toggle_reset;
-				SetRompageWithHardReset(0x200,reset_choice);
-	  		break;
+			SetRompageWithHardReset(0x200,reset_choice);
+  		break;
 	    case 1://PSRAM BOOT WITH ADDON
 	    	ShowbootProgress(gl_loading_game);
 	    	gl_reset_on = Read_SET_info(assress_v_reset);
